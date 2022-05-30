@@ -11,7 +11,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Content Include="BreakTimeCS.ico" />
+    <Compile Remove="AssemblyInfo.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="AssemblyInfo.cs">
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="BreakTimeCS.ico" />
   </ItemGroup>
 
   <ItemGroup>

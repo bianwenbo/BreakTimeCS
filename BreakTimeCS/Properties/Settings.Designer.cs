@@ -23,21 +23,27 @@ namespace BreakTimeCS.Properties {
             }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("25")]
         public double LongDuration {
             get {
                 return ((double)(this["LongDuration"]));
             }
+            set {
+                this["LongDuration"] = value;
+            }
         }
         
-        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("5")]
         public double ShortDuration {
             get {
                 return ((double)(this["ShortDuration"]));
+            }
+            set {
+                this["ShortDuration"] = value;
             }
         }
     }

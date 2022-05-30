@@ -100,14 +100,10 @@ namespace BreakTimeCS.ViewModels
                     break;
                 case 10:
                     new ToastContentBuilder()
-                        .AddArgument("action", "viewConversation")
-                        .AddArgument("conversationId", 9813)
-                        .AddText("即将在10s后锁定屏幕")
-                        .AddText("请及时保存您的工作！")
-                        .Show(toast =>
-                        {
-                            toast.ExpirationTime = DateTime.Now.AddMinutes(Properties.Settings.Default.ShortDuration);
-                        });
+                        .AddText("请在10s后休息")
+                        .AddText("站立远望、摇头晃腰！")
+                        //.AddInlineImage(new Uri("ms-appdata:///local/Resources/BWB-1-Lockscreen.jpg"))
+                        .Show();
                     break;
             }
         }

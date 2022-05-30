@@ -4,22 +4,34 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:BreakTimeCS.Views"
+        xmlns:p="clr-namespace:BreakTimeCS.Properties"
         xmlns:vm="clr-namespace:BreakTimeCS.ViewModels"
         xmlns:ui="http://schemas.modernwpf.com/2019"
         ui:WindowHelper.UseModernWindowStyle="True"
         mc:Ignorable="d"
-        Title="{Binding Countdown, StringFormat = '\{0:m\\:ss\} - BreakTimeCS'}" Width="400" Height="300">
+        Title="{Binding Countdown, StringFormat = '\{0:m\\:ss\} - BreakTimeCS'}" Width="600" Height="450">
     <Window.DataContext>
         <vm:MainViewModel/>
     </Window.DataContext>
     <DockPanel>
-        <Menu DockPanel.Dock="Top">
-            
-        </Menu>
         <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="10,5">
             <TextBlock Text="计时开始于："/>
             <TextBlock Text="{Binding UnlockTime, StringFormat=HH:mm:ss}"/>
         </WrapPanel>
+        <Expander DockPanel.Dock="Left" Margin="10,5" IsExpanded="False" ExpandDirection="Right">
+            <StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,30,0,10">
+                    <TextBlock Text="倒计时间（分）：" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Source={x:Static p:Settings.Default},
+                               Path=LongDuration, Mode=TwoWay}"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+                    <TextBlock Text="间隔时间（分）：" VerticalAlignment="Center"/>
+                    <TextBox Text="{Binding Source={x:Static p:Settings.Default},
+                               Path=ShortDuration, Mode=TwoWay}"/>
+                </StackPanel>
+            </StackPanel>
+        </Expander>
         <Grid Margin="30" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="{Binding Countdown, StringFormat=m\\:ss}" FontSize="90"/>
         </Grid>

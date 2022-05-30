@@ -2,10 +2,10 @@
 <SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="BreakTimeCS.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
-    <Setting Name="LongDuration" Type="System.Double" Scope="Application">
+    <Setting Name="LongDuration" Type="System.Double" Scope="User">
       <Value Profile="(Default)">25</Value>
     </Setting>
-    <Setting Name="ShortDuration" Type="System.Double" Scope="Application">
+    <Setting Name="ShortDuration" Type="System.Double" Scope="User">
       <Value Profile="(Default)">5</Value>
     </Setting>
   </Settings>
