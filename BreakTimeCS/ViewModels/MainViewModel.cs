@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Threading;
+using CommunityToolkit.WinUI.Notifications;
 using Microsoft.Win32;
 
 namespace BreakTimeCS.ViewModels
@@ -54,7 +55,7 @@ namespace BreakTimeCS.ViewModels
             }
         }
         //事件
-        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e)
+        void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e) //监听系统锁屏/解锁事件
         {
             if (e.Reason == SessionSwitchReason.SessionUnlock)
             {
@@ -66,7 +67,7 @@ namespace BreakTimeCS.ViewModels
             }
         }
         //方法
-        void UnlockDo()
+        void UnlockDo() //解锁干什么
         {
             TimeSpan gap = DateTime.UtcNow - lockTime;
             //解锁间隔时间过短、计时尚未临近结束：继续之前未完的计时
@@ -84,18 +85,29 @@ namespace BreakTimeCS.ViewModels
             }
             _timer.Start();
         }
-        void LockDo()
+        void LockDo() //锁屏干什么
         {
             _timer.Stop();
             lockTime = DateTime.UtcNow;
         }
-        void Timer_Tick(object? sender, EventArgs e)
+        void Timer_Tick(object? sender, EventArgs e) //计时器间隔事件
         {
             Countdown -= _timer.Interval;
             switch (Countdown.TotalSeconds)
             {
                 case 0:
                     LockWorkStation();
+                    break;
+                case 10:
+                    new ToastContentBuilder()
+                        .AddArgument("action", "viewConversation")
+                        .AddArgument("conversationId", 9813)
+                        .AddText("即将在10s后锁定屏幕")
+                        .AddText("请及时保存您的工作！")
+                        .Show(toast =>
+                        {
+                            toast.ExpirationTime = DateTime.Now.AddMinutes(Properties.Settings.Default.ShortDuration);
+                        });
                     break;
             }
         }
