@@ -26,9 +26,18 @@ namespace BreakTimeCS.Properties {
         [global::System.Configuration.ApplicationScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("25")]
-        public double Duration {
+        public double LongDuration {
             get {
-                return ((double)(this["Duration"]));
+                return ((double)(this["LongDuration"]));
+            }
+        }
+        
+        [global::System.Configuration.ApplicationScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("5")]
+        public double ShortDuration {
+            get {
+                return ((double)(this["ShortDuration"]));
             }
         }
     }

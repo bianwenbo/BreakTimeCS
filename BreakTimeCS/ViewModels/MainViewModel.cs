@@ -24,8 +24,11 @@ namespace BreakTimeCS.ViewModels
         [DllImport("user32.dll")]
         public static extern bool LockWorkStation();
         private readonly DispatcherTimer _timer = new();
-        private TimeSpan _countdown;
+        private DateTime lockTime;
         private DateTime unlockTime;
+        private readonly TimeSpan longDuration = TimeSpan.FromMinutes(Properties.Settings.Default.LongDuration);
+        private readonly TimeSpan shortDuration = TimeSpan.FromMinutes(Properties.Settings.Default.ShortDuration);
+        private TimeSpan _countdown;
         public DateTime UnlockTime
         {
             get => unlockTime.ToLocalTime();
@@ -65,15 +68,26 @@ namespace BreakTimeCS.ViewModels
         //方法
         void UnlockDo()
         {
-            UnlockTime = DateTime.UtcNow;
-            _countdown = TimeSpan.FromMinutes(Properties.Settings.Default.Duration);
-            _timer.Interval = TimeSpan.FromSeconds(1);
-            _timer.Tick += Timer_Tick;
+            TimeSpan gap = DateTime.UtcNow - lockTime;
+            //解锁间隔时间过短、计时尚未临近结束：继续之前未完的计时
+            if (gap < shortDuration && Countdown > shortDuration) { }
+            //解锁间隔时间果断、计时已经（临近）结束：短时间计时
+            else if (gap < shortDuration && Countdown < shortDuration)
+            {
+                Countdown = shortDuration;
+            }
+            //其余情况重新计时：长时间计时
+            else
+            {
+                UnlockTime = DateTime.UtcNow;
+                Countdown = longDuration;
+            }
             _timer.Start();
         }
         void LockDo()
         {
             _timer.Stop();
+            lockTime = DateTime.UtcNow;
         }
         void Timer_Tick(object? sender, EventArgs e)
         {
@@ -89,6 +103,8 @@ namespace BreakTimeCS.ViewModels
         public MainViewModel()
         {
             SystemEvents.SessionSwitch += new SessionSwitchEventHandler(SystemEvents_SessionSwitch);
+            _timer.Interval = TimeSpan.FromSeconds(1);
+            _timer.Tick += Timer_Tick;
             UnlockDo();
         }
     }

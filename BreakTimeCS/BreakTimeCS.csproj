@@ -6,6 +6,7 @@
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
     <ApplicationIcon>BreakTimeCS.ico</ApplicationIcon>
+	<SatelliteResourceLanguages>en-US</SatelliteResourceLanguages>
 	<SatelliteResourceLanguages>zh-CN</SatelliteResourceLanguages>
   </PropertyGroup>
 
