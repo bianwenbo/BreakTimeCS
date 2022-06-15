@@ -24,6 +24,10 @@ namespace BreakTimeCS.ViewModels
         //数据结构
         [DllImport("user32.dll")]
         public static extern bool LockWorkStation();
+        [DllImport("User32.dll")]
+        private static extern bool GetLastInputInfo(ref LASTINPUTINFO Dummy);
+        [DllImport("Kernel32.dll")]
+        private static extern uint GetLastError();
         private readonly DispatcherTimer _timer = new();
         private DateTime lockTime;
         private DateTime unlockTime;
@@ -51,6 +55,19 @@ namespace BreakTimeCS.ViewModels
                 {
                     _countdown = value;
                     this.NotifyPropertyChanged(nameof(Countdown));
+                }
+            }
+        }
+        private uint _idleTime;
+        public uint IdleTime
+        {
+            get => this._idleTime;
+            set
+            {
+                if (this._idleTime != value)
+                {
+                    this._idleTime = value;
+                    this.NotifyPropertyChanged(nameof(IdleTime));
                 }
             }
         }
@@ -106,6 +123,14 @@ namespace BreakTimeCS.ViewModels
                         .Show();
                     break;
             }
+            IdleTime = GetIdleTime();
+        }
+        static uint GetIdleTime()
+        {
+            LASTINPUTINFO LastUserAction = new();
+            LastUserAction.cbSize = (uint)System.Runtime.InteropServices.Marshal.SizeOf(LastUserAction);
+            GetLastInputInfo(ref LastUserAction);
+            return ((uint)Environment.TickCount - LastUserAction.dwTime);
         }
         //构造函数
         public MainViewModel()
@@ -115,5 +140,10 @@ namespace BreakTimeCS.ViewModels
             _timer.Tick += Timer_Tick;
             UnlockDo();
         }
+    }
+    internal struct LASTINPUTINFO
+    {
+        public uint cbSize;
+        public uint dwTime;
     }
 }
