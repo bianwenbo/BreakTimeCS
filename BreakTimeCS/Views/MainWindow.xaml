@@ -17,19 +17,16 @@
         <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="10,5">
             <TextBlock Text="计时开始于："/>
             <TextBlock Text="{Binding UnlockTime, StringFormat=HH:mm:ss}"/>
-            <TextBlock Text="{Binding IdleTime}"/>
         </WrapPanel>
         <Expander DockPanel.Dock="Left" Margin="10,5" IsExpanded="False" ExpandDirection="Right">
             <StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,30,0,10">
                     <TextBlock Text="倒计时间（分）：" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding Source={x:Static p:Settings.Default},
-                               Path=LongDuration, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding LongDuration, Mode=TwoWay}"/>
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
                     <TextBlock Text="间隔时间（分）：" VerticalAlignment="Center"/>
-                    <TextBox Text="{Binding Source={x:Static p:Settings.Default},
-                               Path=ShortDuration, Mode=TwoWay}"/>
+                    <TextBox Text="{Binding ShortDuration, Mode=TwoWay}"/>
                 </StackPanel>
             </StackPanel>
         </Expander>
