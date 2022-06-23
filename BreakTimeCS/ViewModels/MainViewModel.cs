@@ -88,19 +88,19 @@ namespace BreakTimeCS.ViewModels
                 }
             }
         }
-        //private uint _idleTime;
-        //public uint IdleTime
-        //{
-        //    get => this._idleTime;
-        //    set
-        //    {
-        //        if (this._idleTime != value)
-        //        {
-        //            this._idleTime = value;
-        //            this.NotifyPropertyChanged(nameof(IdleTime));
-        //        }
-        //    }
-        //}
+        private uint _idleTime;
+        public uint IdleTime
+        {
+            get => this._idleTime;
+            set
+            {
+                if (this._idleTime != value)
+                {
+                    this._idleTime = value;
+                    this.NotifyPropertyChanged(nameof(IdleTime));
+                }
+            }
+        }
         //事件
         void SystemEvents_SessionSwitch(object sender, SessionSwitchEventArgs e) //监听系统锁屏/解锁事件
         {
@@ -152,18 +152,21 @@ namespace BreakTimeCS.ViewModels
                         //.AddInlineImage(new Uri("ms-appdata:///local/Resources/BWB-1-Lockscreen.jpg"))
                         .Show();
                     break;
+                default : break;
             }
-            switch (1000 * ShortDuration - GetIdleTime())
+            IdleTime = (uint)(ShortDuration * 60 - GetIdleTime() / 1000);
+            switch (IdleTime)
             {
-                case 0:
+                case <= 1 :
                     LockWorkStation();
                     break;
-                case 10:
+                case 10 :
                     new ToastContentBuilder()
                         .AddText("系统已闲置超时，即将锁屏！")
                         .AddText("任意操作即可取消锁屏。")
                         .Show();
                     break;
+                default: break;
             }
         }
         static uint GetIdleTime() //系统空闲时间 ms

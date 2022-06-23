@@ -17,6 +17,9 @@
         <WrapPanel DockPanel.Dock="Bottom" Orientation="Horizontal" Margin="10,5">
             <TextBlock Text="计时开始于："/>
             <TextBlock Text="{Binding UnlockTime, StringFormat=HH:mm:ss}"/>
+            <TextBlock Text="，空闲倒计时："/>
+            <TextBlock Text="{Binding IdleTime}"/>
+            <TextBlock Text=" s"/>
         </WrapPanel>
         <Expander DockPanel.Dock="Left" Margin="10,5" IsExpanded="False" ExpandDirection="Right">
             <StackPanel>
